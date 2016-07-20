@@ -153,5 +153,3 @@ class Mailhandler < Sensu::Handler
     end
   end
 end
-
-puts "hello"
