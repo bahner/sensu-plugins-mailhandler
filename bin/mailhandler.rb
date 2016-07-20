@@ -134,8 +134,11 @@ class Mailhandler < Sensu::Handler
         --
         <%= output %>
       BODY
+    end
+
     template = Erubis.new(erb_template)
     template.result(binding)
+
   end
 
   def handle
@@ -145,7 +148,7 @@ class Mailhandler < Sensu::Handler
         from    self.get_setting(from)
         to      recipient
         subject self.get_setting(subject)
-        body    self.body()
+        body    self.body
         delivery_method :smtp, self.get_setting(smtp_host), self.get_setting(smtp_port)
       end
 
@@ -153,3 +156,4 @@ class Mailhandler < Sensu::Handler
     end
   end
 end
+
