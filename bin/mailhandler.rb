@@ -83,19 +83,19 @@ class Mailhandler < Sensu::Handler
           long: '--to recipient',
           required: false
   
-  # Set sane defaults
-  default = Hash.new
-
-  default['from']       = 'root@' + @fqdn,
-  default['to']         = 'lars.bahner@gmail.com',
-  default['smtp_host']  = 'localhost',
-  default['smtp_port']  = '25'
-  default['subject']    = 'Sensu@' + @event['client']['name'] + ': ' + status_text
-
   def initialize
 
     @fqdn = %x(hostname -f)
     
+    # Set sane defaults
+    @default = Hash.new
+
+    @default['from']       = "root@#{@fqdn}"
+    @default['to']         = 'lars.bahner@gmail.com'
+    @default['smtp_host']  = 'localhost'
+    @default['smtp_port']  = '25'
+    @default['subject']    = "Sensu@#{@event['client']['name']}:#{status_text}"
+
   end
 
   def status_text
@@ -119,7 +119,7 @@ class Mailhandler < Sensu::Handler
     elsif @event['check'][name]
       @event['check'][name]
     else
-      default[name]
+      @default[name]
     end
   end
 
