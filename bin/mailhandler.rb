@@ -44,8 +44,6 @@ require 'json'
 require 'mail'
 require 'erubis'
 
-$fqdn = %x(hostname -f)
-
 class Mailhandler < Sensu::Handler
 
   option  :body_template,
@@ -88,11 +86,17 @@ class Mailhandler < Sensu::Handler
   # Set sane defaults
   default = Hash.new
 
-  default['from']       = 'root@' + $fqdn,
+  default['from']       = 'root@' + @fqdn,
   default['to']         = 'lars.bahner@gmail.com',
   default['smtp_host']  = 'localhost',
   default['smtp_port']  = '25'
   default['subject']    = 'Sensu@' + @event['client']['name'] + ': ' + status_text
+
+  def initialize
+
+    @fqdn = %x(hostname -f)
+    
+  end
 
   def status_text
     case @event['check']['status']
