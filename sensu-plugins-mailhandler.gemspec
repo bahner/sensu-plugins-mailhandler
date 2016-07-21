@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name                = 'sensu-plugins-mailhandler'
-  s.version             = '0.0.3'
+  s.version             = '0.0.4'
   s.date                = '2016-07-20'
   s.summary             = 'Handler to easily send email'
   s.description         = 'Handler to pretty print an event and send it as email.'
